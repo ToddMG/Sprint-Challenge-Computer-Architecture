@@ -38,14 +38,14 @@ class CPU:
     def hlt(self):
         self.running = False
 
+    def jmp(self, reg_num):
+        self.pc = self.registers[reg_num]
+
     def jeq(self, reg_num):
         if self.FL & 1 is 1:
             self.pc = self.registers[reg_num]
         else:
             self.pc += 2
-
-    def jmp(self, reg_num):
-        self.pc = self.registers[reg_num]
 
     def jne(self, reg_num):
         if self.FL & 1 is 0:
@@ -98,13 +98,13 @@ class CPU:
             elif instruction == HLT:
                 self.hlt()
 
-            elif instruction == JEQ:
-                reg_num = self.ram[self.pc + 1]
-                self.jeq(reg_num)
-
             elif instruction == JMP:
                 reg_num = self.ram[self.pc + 1]
                 self.jmp(reg_num)
+
+            elif instruction == JEQ:
+                reg_num = self.ram[self.pc + 1]
+                self.jeq(reg_num)
 
             elif instruction == JNE:
                 reg_num = self.ram[self.pc + 1]
